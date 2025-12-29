@@ -3,10 +3,11 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --easy: #c0ee4d;
-  --easy-light: #e1fd8b;
+  --easy: #b3e13f;
+  --easy-light: #dbf294;
+
   --medium: #62c6a5;
-  --medium-light:#a2e8d7;
+  --medium-light: #a2e8d7;
   --hard: #bda9f2;
   --hard-light: #dbd3f7;
 }

@@ -56,7 +56,7 @@ function QuestionContent({
   };
 
   return (
-    <fieldset className="rounded-2xl border border-gray-200  p-6 w-full mx-auto bg-gray-50">
+    <fieldset className="rounded-2xl border border-gray-200  p-6 w-full mx-auto bg-gray-100">
       <p className="mt-2 text-xl font-semibold text-gray-900">
         {question.prompt}
       </p>

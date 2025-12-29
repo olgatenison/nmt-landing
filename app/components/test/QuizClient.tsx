@@ -1,13 +1,10 @@
-// export default function QuizClient({ variant }: { variant: QuizVariant }) {
-//   return <div>Variant: {variant}</div>;
-// }
-
 "use client";
 
 import { useMemo, useState } from "react";
 import type { QuizVariant, Question } from "../../lib/quiz/types";
 import { questionBank } from "../../lib/quiz";
 import QuestionComponent from "./Question";
+import ProgressBar from "./ProgressBar";
 
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
@@ -101,7 +98,7 @@ export default function QuizClient({ variant }: { variant: QuizVariant }) {
   }
 
   return (
-    <div className="max-w-7xl mx-auto py-20">
+    <div className="max-w-7xl mx-auto py-20  px-6 ">
       <div className="flex w-full flex-col gap-6 lg:flex-row lg:items-stretch">
         {/* left */}
         <div
@@ -122,6 +119,7 @@ export default function QuizClient({ variant }: { variant: QuizVariant }) {
 
         {/* right */}
         <div className="w-full lg:basis-3/4">
+          <ProgressBar total={total} currentStep={idx + 1} variant={variant} />
           <QuestionComponent
             question={current}
             variant={variant}
