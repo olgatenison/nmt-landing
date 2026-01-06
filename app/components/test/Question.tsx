@@ -56,7 +56,7 @@ function QuestionContent({
   };
 
   return (
-    <fieldset className="rounded-2xl border border-gray-200  p-6 w-full mx-auto bg-gray-100">
+    <fieldset className="rounded-2xl border border-gray-200 p-6 w-full mx-auto bg-gray-100">
       <p className="mt-2 text-xl font-semibold text-gray-900">
         {question.prompt}
       </p>
@@ -68,6 +68,7 @@ function QuestionContent({
 
           const showFeedback =
             showInstantFeedback && submitted && selected !== null;
+
           const isRightOption = i === question.correctIndex;
           const isChosen = i === selected;
 
@@ -75,20 +76,21 @@ function QuestionContent({
             "flex items-start gap-3 rounded-xl border px-4 py-3 transition cursor-pointer";
           const normal = "border-gray-200 hover:bg-gray-50";
           const active = "bg-gray-50";
-          // const correct = "border-emerald-500 bg-emerald-50";
-          // const wrong = "border-rose-500 bg-rose-50";
+          const correct = "border-emerald-500 bg-emerald-50";
+          const wrong = "border-rose-500 bg-rose-50";
 
+          // IMPORTANT: rowClass must ALWAYS be a string
           const rowClass = !showFeedback
             ? checked
               ? classNames(base, active)
               : classNames(base, normal)
-            : isChosen && isRightOption;
-          // ? classNames(base, correct)
-          // : isChosen && !isRightOption
-          // ? classNames(base, wrong)
-          // : isRightOption
-          // ? classNames(base, correct)
-          // : classNames(base, normal);
+            : isChosen && isRightOption
+            ? classNames(base, correct)
+            : isChosen && !isRightOption
+            ? classNames(base, wrong)
+            : isRightOption
+            ? classNames(base, correct)
+            : classNames(base, normal);
 
           return (
             <label
@@ -117,7 +119,7 @@ function QuestionContent({
                 aria-hidden="true"
                 className="mt-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border"
                 style={{
-                  borderColor: checked ? main : "#a2a2a2", // gray-300
+                  borderColor: checked ? main : "#a2a2a2",
                   backgroundColor: checked ? main : "#FFFFFF",
                 }}
               >
@@ -135,13 +137,12 @@ function QuestionContent({
         })}
       </div>
 
-      {/* {showInstantFeedback && submitted && selected !== null && (
-        <div className="mt-4">
+      {showInstantFeedback && submitted && selected !== null && (
+        <div className="mt-4" aria-live="polite">
           <p
             className={
               isCorrect ? "text-sm text-emerald-700" : "text-sm text-rose-700"
             }
-            aria-live="polite"
           >
             {isCorrect ? "Правильно ✅" : "Неправильно ❌"}
           </p>
@@ -149,15 +150,12 @@ function QuestionContent({
             <p className="mt-1 text-sm text-gray-600">{question.explanation}</p>
           )}
         </div>
-      )} */}
+      )}
 
       <div className="mt-6 flex items-center justify-between border-t border-gray-200 pt-4">
-        {/* <p className="text-xs text-gray-500">
-          {question.type.toUpperCase()} · {question.topic}
-        </p> */}
-        {/* question */}
         <div className="flex items-start justify-between gap-2">
-          <legend className="text-base  text-gray-400">Питання</legend>
+          {/* legend тут не підходить — просто текст */}
+          <span className="text-base text-gray-400">Питання</span>
 
           {typeof index === "number" && typeof total === "number" && (
             <span className="text-base text-gray-400 font-semibold">
@@ -165,7 +163,18 @@ function QuestionContent({
             </span>
           )}
         </div>
+
         <div className="flex items-center gap-2">
+          {onSkip && (
+            <button
+              type="button"
+              onClick={onSkip}
+              className="text-sm/6 font-semibold text-gray-500 hover:text-gray-700"
+            >
+              Пропустити
+            </button>
+          )}
+
           <button
             type="button"
             disabled={selected === null}
